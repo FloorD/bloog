@@ -1,6 +1,6 @@
 class Blog
   attr_reader :entries
-  attr_writer :post_source
+  attr_writer :post_source, :title, :subtitle, :body
 
   def initialize 
     @entries = []
@@ -8,7 +8,7 @@ class Blog
   
   def new_post(*args) 
     post_source.call(*args).tap do |p|
-      p.blog = self end
+      p.blog = self
     end
   end
   
@@ -18,5 +18,6 @@ class Blog
   
   private
   def post_source
-  @post_source ||= Post.public_method(:new) end
+    @post_source ||= Post.public_method(:new) 
+  end
 end
