@@ -21,9 +21,27 @@ describe Blog do
       @it.entries.must_include(entry)
       end 
     end
+    
+  describe "#pubdate" do
+    describe "before publishing" do
+      it "is blank" do 
+        @it.pubdate.must_be_nil
+      end 
+    end
+    
+    describe "after publishing" do 
+      before do
+        @clock = stub!
+        @now = DateTime.parse("2011-09-11T02:56")
+        stub(@clock).now(){@now}
+        @it.blog = stub!
+        @it.publish(@clock)
+      end
+    end
+  end
   
-  it "returns a new post" do 
-    @it.new_post.must_equal @new_post
+  it "is the current time" do 
+    @it.pubdate.must_equal(@now)
   end
   
   it "sets the post’s blog reference to itself" do
