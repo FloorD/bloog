@@ -45,10 +45,35 @@ describe Post do
 ￼   after do 
       @blog.verify
     end
+    describe "given an invalid post" do 
+      before do @it.title = nil end
+    
+        it "wont add the post to the blog" do 
+          dont_allow(@blog).add_entry 
+          @it.publish
+        end
+        
+        it "returns false" do 
+          refute(@it.publish)
+        end 
+      end
+    end
     
     it "adds the post to the blog" do 
       @blog.expect :add_entry, nil, [@it] 
       @it.publish
+    end 
+    
+    it "is not valid with a blank title" do 
+      [nil, "", " "].each do |bad_title|
+        @it.title = bad_title
+        refute @it.valid? 
+      end
+    end
+    
+    it "is valid with a non-blank title" do 
+      @it.title = "x"
+      assert @it.valid?
     end 
     
     it "supports setting attributes in the initializer" do 
