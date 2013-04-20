@@ -20,3 +20,7 @@ class Post
     @blog.add_entry(self)
   end
 end
+
+  def picture? 
+    image_url.present?
+  end
