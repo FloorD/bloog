@@ -1,5 +1,9 @@
 require ’delegate’
-class TextPostExhibit < SimpleDelegator
+class TextPostExhibit < Exhibit
+  def self.applicable_to?(object)
+    object.is_a?(Post) && (!object.picture?) 
+  end
+  
   def initialize(model, context) 
     @context = context 
     super(model)
