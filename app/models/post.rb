@@ -1,10 +1,17 @@
-class Post
-  require ’active_model’
-  extend ActiveModel::Naming 
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
-  validates :title, presence: true
-  attr_accessor :blog, :title, :body, :image_url, :pubdate
+require ’date’
+require ’active_record’
+class Post < ActiveRecord::Base
+  validates :title, presence: true 
+  attr_accessor :blog
+  
+  def picture?
+    image_url.present? 
+  end
+  def publish(clock=DateTime) 
+    return false unless valid? 
+    self.pubdate = clock.now 
+    @blog.add_entry(self)
+  end 
   
   def initialize(attrs={})
     attrs.each do |k,v| send("#{k}=",v) end
@@ -13,14 +20,4 @@ class Post
   def persisted? 
     false
   end
-  
-  def publish(clock=DateTime)
-    return false unless valid? 
-    self.pubdate = clock.now 
-    @blog.add_entry(self)
-  end
 end
-
-  def picture? 
-    image_url.present?
-  end

@@ -15,10 +15,10 @@ describe Blog do
       end
   
   describe "#add_entry" do
-   it "adds the entry to the blog" do 
-    entry = stub!
-      @it.add_entry(entry) 
-      @it.entries.must_include(entry)
+    it "adds the entry to the blog" do
+      entry = stub!
+      mock(entry).save
+      @it.add_entry(entry)
     end 
        
     it "sets the post’s blog reference to itself" do
