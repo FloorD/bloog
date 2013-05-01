@@ -10,7 +10,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
 group :development, :test do
-  gem ’rr’
+  gem 'rr'
 end
 
   gem 'uglifier', '>= 1.0.3'
