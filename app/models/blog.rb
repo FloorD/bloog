@@ -16,8 +16,8 @@ class Blog
     end
   end
   
-  def entries
-    fetch_entries.sort_by{|e| e.pubdate}.reverse.take(10)
+  def initialize(entry_fetcher=Post.public_method(:most_recent)) 
+    @entry_fetcher = entry_fetcher
   end
   
   def add_entry(entry) 
@@ -29,6 +29,7 @@ class Blog
   def fetch_entries 
     @entry_fetcher.()
   end
+  
   def post_source
     @post_source ||= Post.public_method(:new) 
   end
