@@ -35,5 +35,10 @@ describe Blog do
       @it.entries.size.must_equal(10)
       @it.entries.wont_include(oldest)
     end 
+    
+    it "defaults body to ’Nothing to see here’" do 
+      post = make_post(body: ’’) 
+      post.body.must_equal("Nothing to see here")
+    end
   end
 end
