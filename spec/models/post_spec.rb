@@ -14,7 +14,12 @@ require_relative ’../../app/models/post’
 
 describe Post do 
   before do
-    @it = Post.new 
+    setup_nulldb
+    @it = Post.new(title: "TITLE") 
+    @ar = @it
+  end
+  after do
+    teardown_nulldb
   end
   
   it "starts with blank attributes" do 
@@ -86,12 +91,6 @@ describe Post do
     it "is valid with a non-blank title" do 
       @it.title = "x"
       assert @it.valid?
-    end 
-    
-    it "supports setting attributes in the initializer" do 
-      it = Post.new(title: "mytitle", body: "mybody") 
-      it.title.must_equal "mytitle"
-      it.body.must_equal "mybody"
     end
   end
 end
