@@ -1,3 +1,4 @@
+describe TagList do
 describe "given a blank string" do 
   before do
     @it = TagList.new("") 

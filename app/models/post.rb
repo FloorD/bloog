@@ -1,7 +1,6 @@
-require ’date’
-require ’active_record’
-class Post < ActiveRecord::Base
-  include FigLeaf
+require 'date'
+require 'active_record'
+class Post < ActiveRecord::Base 
   hide ActiveRecord::Base, ancestors: true,
          except: [Object, :init_with, :new_record?,
                   :errors, :valid?, :save]
@@ -10,6 +9,9 @@ class Post < ActiveRecord::Base
                     ActiveRecord::Relation
   validates :title, presence: true 
   attr_accessor :blog
+  composed_of :tags, class_name: ’TagList’, mapping: %w(tags tags),
+                     converter: ->(value) { TagList(value) }
+  serialize :tags
   
   def picture?
     image_url.present? 
@@ -59,9 +61,22 @@ class Post < ActiveRecord::Base
     blog
   end
 
+  def self.most_recent(limit=LIMIT_DEFAULT)
+    order("pubdate DESC").limit(limit) 
+  end
+  
+  def self.all_tags_alphabetical 
+    all_tags.alphabetical
+  end
+  
+  def self.all_tags 
+    except(:limit).map(&:tags).reduce(TagList.new([]), &:+)
+  end
+
   private
   def set_default_body 
     if body.blank?
-      self.body = ’Nothing to see here’ 
+      self.body = 'Nothing to see here' 
     end
+  end
 end

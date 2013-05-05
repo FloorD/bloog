@@ -5,11 +5,6 @@ class Blog
     @entry_fetcher = entry_fetcher
   end
   
-  before do
-   @entries = []
-   @it = Blog.new(->{@entries})
-  end
-  
   def new_post(*args) 
     post_source.call(*args).tap do |p|
       p.blog = self
@@ -32,5 +27,9 @@ class Blog
   
   def post_source
     @post_source ||= Post.public_method(:new) 
+  end
+  
+  def self.model_name
+    ActiveModel::Name.new(self) 
   end
 end
