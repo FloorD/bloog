@@ -1,4 +1,5 @@
-require ’rr’
+require 'rr'
+require 'minitest/autorun'
 
 class MiniTest::Unit::TestCase 
   include RR::Adapters::MiniTest
@@ -16,11 +17,10 @@ end
 
 module SpecHelpers 
   def setup_nulldb
-    schema_path = File.expand_path(’../db/schema.rb’,
-                                   File.dirname(__FILE__))
+    schema_path = File.expand_path('../db/schema.rb',File.dirname(__FILE__))
     NullDB.nullify(schema: schema_path) 
   end
-￼ def teardown_nulldb 
+  def teardown_nulldb 
     NullDB.restore
   end 
 end

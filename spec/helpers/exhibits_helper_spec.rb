@@ -1,9 +1,9 @@
-require_relative ’../spec_helper_lite’
-require_relative ’../../app/helpers/exhibits_helper’
+require_relative '../spec_helper_lite'
+require_relative '../../app/helpers/exhibits_helper'
 
-stub_class ’PicturePostExhibit’
-stub_class ’TextPostExhibit’
-stub_class ’Post’
+# stub_class 'PicturePostExhibit'
+# stub_class 'TextPostExhibit'
+# stub_class 'Post'
 
 describe ExhibitsHelper do 
   before do
@@ -24,7 +24,7 @@ describe ExhibitsHelper do
     @it.exhibit(post, @context).must_be_kind_of(TextPostExhibit)
   end
   
-  it "leaves objects it doesn’t know about alone" do 
+  it "leaves objects it doesn't know about alone" do 
     model = Object.new
     @it.exhibit(model, @context).must_be_same_as(model)
   end 

@@ -1,16 +1,16 @@
-require ’minitest/autorun’
-require_relative ’../../app/models/post’
-require_relative ’../spec_helper_lite’ 
-stub_module ’ActiveModel::Conversion’ 
-stub_module ’ActiveModel::Naming’ 
-require_relative ’../../app/models/post’
+require 'minitest/autorun'
+require_relative '../../app/models/post'
+require_relative '../spec_helper_lite' 
+stub_module 'ActiveModel::Conversion' 
+stub_module 'ActiveModel::Naming' 
+require_relative '../../app/models/post'
 
 module ActiveModel 
   module Naming; end 
   module Conversion; end
 end
 
-require_relative ’../../app/models/post’
+require_relative '../../app/models/post'
 
 describe Post do 
   before do
@@ -42,7 +42,8 @@ describe Post do
     @it.blog = blog
     @it.blog.must_equal blog
   end
-  
+
+ 
   describe "#picture?" do
     it "is true when the post has a picture URL" do
       @it.image_url = "http://example.org/foo.png"
@@ -51,46 +52,46 @@ describe Post do
   
     it "is false when the post has no picture URL" do 
       @it.image_url = ""
-      refute(@it.picture?)
-  ￼ end 
-  end
+      refute(@it.picture?)      ￼
+    end
   
-  describe "#publish" do 
-    before do
-      @blog = MiniTest::Mock.new
-      @it.blog = @blog end
-￼   after do 
-      @blog.verify
-    end
-    describe "given an invalid post" do 
-      before do @it.title = nil end
-    
-        it "wont add the post to the blog" do 
-          dont_allow(@blog).add_entry 
-          @it.publish
+    describe "#publish" do 
+      before do
+        @blog = MiniTest::Mock.new
+        @it.blog = @blog end
+        ￼   after do 
+          @blog.verify
         end
+        describe "given an invalid post" do 
+          before do @it.title = nil end
+    
+            it "wont add the post to the blog" do 
+              dont_allow(@blog).add_entry 
+              @it.publish
+            end
         
-        it "returns false" do 
-          refute(@it.publish)
+            it "returns false" do 
+              refute(@it.publish)
+            end 
+          end
+        end
+    
+        it "adds the post to the blog" do 
+          @blog.expect :add_entry, nil, [@it] 
+          @it.publish
         end 
+    
+        it "is not valid with a blank title" do 
+          [nil, "", " "].each do |bad_title|
+            @it.title = bad_title
+            refute @it.valid? 
+          end
+        end
+    
+        it "is valid with a non-blank title" do 
+          @it.title = "x"
+          assert @it.valid?
+        end
       end
-    end
-    
-    it "adds the post to the blog" do 
-      @blog.expect :add_entry, nil, [@it] 
-      @it.publish
-    end 
-    
-    it "is not valid with a blank title" do 
-      [nil, "", " "].each do |bad_title|
-        @it.title = bad_title
-        refute @it.valid? 
-      end
-    end
-    
-    it "is valid with a non-blank title" do 
-      @it.title = "x"
-      assert @it.valid?
     end
   end
-end

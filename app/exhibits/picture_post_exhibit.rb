@@ -1,5 +1,5 @@
-require ’delegate’
-require_relative ’exhibit’
+require 'delegate'
+require_relative 'exhibit'
 
   class PicturePostExhibit < Exhibit
     def self.applicable_to?(object)

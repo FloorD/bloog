@@ -60,6 +60,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.22)
+    minitest (4.7.4)
     multi_json (1.7.2)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -131,6 +132,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   cucumber
   jquery-rails
+  minitest
   rails (= 3.2.11)
   rr
   rspec
